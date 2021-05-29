@@ -1,0 +1,22 @@
+{
+  "name": "crypto-zombies",
+  "version": "1.0.0",
+  "description": "区块链 NFT 游戏，基于火币生态链 Heco 开发部署。",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/onee-io/crypto-zombies.git"
+  },
+  "author": "onee",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/onee-io/crypto-zombies/issues"
+  },
+  "homepage": "https://github.com/onee-io/crypto-zombies#readme"
+}
