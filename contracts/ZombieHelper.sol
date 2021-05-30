@@ -64,5 +64,7 @@ contract ZombieHelper is ZombieFactory {
         uint newDna = (zombie.dna.add(targetDna)).div(2);
         newDna = newDna - newDna % 10 + 9; // 将基因最后一位改为9，标记为合体僵尸
         _createZombie("NoName", newDna);
+        // 触发冷却
+        _triggerCooldown(zombie);
     }
 }

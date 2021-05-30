@@ -41,7 +41,7 @@ contract ZombieFactory is Ownable {
     // 地址拥有僵尸数组映射：拥有者 => 僵尸ID数组
     mapping (address => uint[]) ownerZombies;
     // 僵尸喂养次数映射：僵尸ID => 喂养次数
-    mapping (uint => uint) zombieFeedTimes;
+    mapping (uint => uint) public zombieFeedTimes;
 
     // 僵尸创建事件
     event NewZombie(uint zombieId, string name, uint dna);
