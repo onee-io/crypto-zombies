@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/onee-io/crypto-zombies/issues"
   },
-  "homepage": "https://github.com/onee-io/crypto-zombies#readme"
+  "homepage": "https://github.com/onee-io/crypto-zombies#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.1.0"
+  }
 }
