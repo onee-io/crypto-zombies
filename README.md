@@ -8,6 +8,14 @@
 
 游戏地址：// TODO 待开发完成后部署到 Heco 主网
 
+## 火币生态链 Heco 主网节点
+
+- 名称：Heco Mainnet
+- RPC URL：https://http-mainnet-node.huobichain.com
+- 链ID：128
+- 符号：HT
+- 区块浏览器URL：https://hecoinfo.com
+
 ## 编译步骤
 
 ```sh
