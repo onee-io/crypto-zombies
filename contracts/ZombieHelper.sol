@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "./ZombieFactory.sol";
 
 // 僵尸助手合约
 contract ZombieHelper is ZombieFactory {
-    using SafeMath for uint256;
     
     // 升级费用
     uint public levelUpFee = 0.0001 ether;
@@ -31,7 +29,7 @@ contract ZombieHelper is ZombieFactory {
     // 付费升级
     function levelUp(uint zombieId) external payable {
         require(msg.value >= levelUpFee, "Your balance is not enough.");
-        zombies[zombieId].level = zombies[zombieId].level.add(1); // 使用"zombies[zombieId].level++;"也可以
+        zombies[zombieId].level++;
     }
 
     // 僵尸改名（需为自己所拥有的僵尸并且等级至少2级）
@@ -39,15 +37,29 @@ contract ZombieHelper is ZombieFactory {
         zombies[zombieId].name = name;
     }
 
+    // 自定义僵尸DNA（需为自己所拥有的僵尸并且等级至少20级）
+    function changeDna(uint zombieId, uint dna) external aboveLevel(20, zombieId) onlyOwnerOf(zombieId) {
+        zombies[zombieId].dna = dna;
+    }
+
     // 获取地址所拥有的僵尸数组
     function getZombiesByOwner(address owner) external view returns (uint[] memory) {
-        return ownerZombies[owner];
+        // 为了节省gas消耗 在内存中创建结果数组 方法之后完后就会销毁
+        uint[] memory result = new uint[](ownerZombieCount[owner]);
+        uint counter = 0;
+        for (uint i = 0; i < zombies.length; i++) {
+            if (zombieToOwner[i] == owner) {
+                result[counter] = i;
+                counter++;
+            }
+        }
+        return result;
     }
 
     // 触发冷却
     function _triggerCooldown(Zombie storage zombie) internal {
         // 冷却时间到次日凌晨0点
-        zombie.readyTime = (block.timestamp + cooldownTime) - (block.timestamp + cooldownTime) % 1 days;
+        zombie.readyTime = uint32(block.timestamp + cooldownTime) - uint32(block.timestamp + cooldownTime) % 1 days;
     }
 
     // 判断僵尸是否完成冷却
@@ -61,7 +73,7 @@ contract ZombieHelper is ZombieFactory {
         require(_isReady(zombie), "Your zombie are cooldown");
         // 取两个基因序列的平均数为新的基因序列
         targetDna = targetDna % dnaModulus; // 确保目标基因序列满足格式
-        uint newDna = (zombie.dna.add(targetDna)).div(2);
+        uint newDna = (zombie.dna + targetDna) / 2;
         newDna = newDna - newDna % 10 + 9; // 将基因最后一位改为9，标记为合体僵尸
         _createZombie("NoName", newDna);
         // 触发冷却
