@@ -25,9 +25,9 @@ contract ZombieFactory is Ownable {
         // 基因序列
         uint dna;
         // 胜利次数
-        uint32 winCount;
+        uint16 winCount;
         // 失败次数
-        uint32 lossCount;
+        uint16 lossCount;
         // 等级
         uint32 level;
         // 冷却时间

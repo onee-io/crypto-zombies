@@ -16,7 +16,7 @@ contract ZombieHelper is ZombieFactory {
     }
 
     // 判断调用者为僵尸的拥有者
-    modifier onlyOwnerOf(uint zombieId) {
+    modifier ownerOf(uint zombieId) {
         require(msg.sender == zombieToOwner[zombieId], "This zombie doesn't belong to you.");
         _;
     }
@@ -33,12 +33,12 @@ contract ZombieHelper is ZombieFactory {
     }
 
     // 僵尸改名（需为自己所拥有的僵尸并且等级至少2级）
-    function changeName(uint zombieId, string calldata name) external aboveLevel(2, zombieId) onlyOwnerOf(zombieId) {
+    function changeName(uint zombieId, string calldata name) external aboveLevel(2, zombieId) ownerOf(zombieId) {
         zombies[zombieId].name = name;
     }
 
     // 自定义僵尸DNA（需为自己所拥有的僵尸并且等级至少20级）
-    function changeDna(uint zombieId, uint dna) external aboveLevel(20, zombieId) onlyOwnerOf(zombieId) {
+    function changeDna(uint zombieId, uint dna) external aboveLevel(20, zombieId) ownerOf(zombieId) {
         zombies[zombieId].dna = dna;
     }
 
@@ -68,7 +68,7 @@ contract ZombieHelper is ZombieFactory {
     }
 
     // 僵尸合体 产生新僵尸
-    function _multiply(uint zombieId, uint targetDna) internal onlyOwnerOf(zombieId) {
+    function _multiply(uint zombieId, uint targetDna) internal ownerOf(zombieId) {
         Zombie storage zombie = zombies[zombieId];
         require(_isReady(zombie), "Your zombie are cooldown");
         // 取两个基因序列的平均数为新的基因序列
