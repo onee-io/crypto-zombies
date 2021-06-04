@@ -23,7 +23,7 @@
 $ truffle compile
 
 # 合约部署
-$ truffle init
+$ truffle migrate
 
 # 安装前端依赖
 $ npm install
