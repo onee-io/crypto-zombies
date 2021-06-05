@@ -9,7 +9,7 @@ contract ZombieFeeding is ZombieHelper {
     using SafeMath for uint256;
 
     // 喂养僵尸
-    function feed(uint zombieId) public ownerOf(zombieId) {
+    function feed(uint zombieId) public onlyOwnerOf(zombieId) {
         Zombie storage zombie = zombies[zombieId];
         require(_isReady(zombie), "Your zombie are cooldown");
         // 喂养次数+1

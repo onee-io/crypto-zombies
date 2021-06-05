@@ -23,7 +23,7 @@ contract ZombieBattle is ZombieHelper {
     }
 
     // 僵尸攻击
-    function attack(uint zombieId, uint targetId) external ownerOf(zombieId) {
+    function attack(uint zombieId, uint targetId) external onlyOwnerOf(zombieId) {
         Zombie storage myZombie = zombies[zombieId];
         Zombie storage enemyZombie = zombies[targetId];
         // 生成战斗结果随机数
