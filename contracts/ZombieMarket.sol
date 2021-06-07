@@ -31,7 +31,7 @@ contract ZombieMarket is ZombieOwnership {
     function saleMyZombie(uint zombieId, uint price) external onlyOwnerOf(zombieId) {
         require(price >= tax + minPrice, "Your price is too low");
         // 僵尸售卖信息添加到商店
-        zombieShop[zombieId] = ZombieSales(msg.sender, price);
+        zombieShop[zombieId] = ZombieSales(payable(msg.sender), price);
         emit SaleZombie(zombieId, price);
     }
 
